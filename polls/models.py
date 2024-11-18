@@ -13,16 +13,24 @@ class Department(models.Model):
     def __str__(self):
         return self.title
 
-class Employee(models.Model):
-    name = models.CharField(max_length=255)
-    department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='employees')
-
-    def __str__(self):
-        return self.name
-
 class Project(models.Model):
     name = models.CharField(max_length=255, unique=True)
     participate_date = models.DateField()
+    end_date = models.DateField()
+    budget = models.IntegerField()
+    def __str__(self):
+        return self.name
+
+class Employee(models.Model):
+    name = models.CharField(max_length=255)
+    salary = models.IntegerField()
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='employees')
+    position = models.CharField(max_length=255)
+    def __str__(self):
+        return self.name
+
+class EmployeeProject(models.Model):
+    HoursWorked = models.IntegerField()
     CHOICES = {
         "QC": "QualityAssurace",
         "FD": "FrontEndDev",
@@ -30,7 +38,9 @@ class Project(models.Model):
         "TT": "Tester"
     }
     employee_role = models.CharField(max_length=255, choices=CHOICES)
-    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='projects')
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='employeeDetails')
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='projectsDetails')
 
     def __str__(self):
-        return self.name
+        return f"EmployeeProject {self.pk}"
+

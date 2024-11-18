@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Project, Employee, Department
+from .models import Project, Employee, Department, EmployeeProject
 
 class EmployeeInline(admin.StackedInline):
     model = Employee
@@ -11,17 +11,20 @@ class ProjectInline(admin.TabularInline):
     extra = 1
     show_change_link = True
 
+class EmployeeProjectInline(admin.TabularInline):
+    model = EmployeeProject
+    extra = 1
+    show_change_link = True
+
 @admin.register(Employee)
 class EmployeeAdmin(admin.ModelAdmin):
-
-    def project_count(self, obj):
-        return obj.projects.count()
+     
+    def get_manager(self, obj):
+        return obj.department.manager
     
-    list_display = ('name', 'project_count')
-    inlines = [ProjectInline]
-    readonly_fields = ('project_count',)
-    project_count.short_description = 'Number of Project'
-
+    list_display = ('name', 'salary', 'position','get_manager')
+    inlines = [EmployeeProjectInline]
+    get_manager.short_description = 'Employee manager'
 
 @admin.register(Department)
 class DepartmentAdmin(admin.ModelAdmin):
@@ -29,12 +32,21 @@ class DepartmentAdmin(admin.ModelAdmin):
     def employee_count(self, obj):
         return obj.employees.count()
     
-    list_display = ('title', 'employee_count')
+    def get_manager(self, obj):
+        return obj.manager
+    
+    list_display = ('title', 'employee_count','get_manager')
     inlines = [EmployeeInline]
     employee_count.short_description = 'Number of Employee'
+    get_manager.short_description = 'Department manager'
+
+@admin.register(EmployeeProject)
+class EmployeeProjectAdmin(admin.ModelAdmin):
+    list_display = ('id', 'employee_role','HoursWorked',)
 
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('name', 'participate_date', 'employee_role')
-    search_fields = ('name', 'participate_date', 'employee_role')
+    list_display = ('name', 'participate_date','end_date', 'budget')
+    search_fields = ('name', 'participate_date', 'end_date,' ,'budget')
+    inlines=[EmployeeProjectInline]
