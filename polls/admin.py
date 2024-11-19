@@ -22,9 +22,9 @@ class EmployeeAdmin(admin.ModelAdmin):
     def get_manager(self, obj):
         return obj.department.manager
     
-    list_display = ('name', 'salary', 'position','get_manager')
+    list_display = ('name', 'salary', 'date_of_birth','position','get_manager')
     inlines = [EmployeeProjectInline]
-    get_manager.short_description = 'Employee manager'
+    get_manager.short_description = "Employee's manager"
 
 @admin.register(Department)
 class DepartmentAdmin(admin.ModelAdmin):
@@ -35,18 +35,18 @@ class DepartmentAdmin(admin.ModelAdmin):
     def get_manager(self, obj):
         return obj.manager
     
-    list_display = ('title', 'employee_count','get_manager')
+    list_display = ('name', 'employee_count','get_manager')
     inlines = [EmployeeInline]
     employee_count.short_description = 'Number of Employee'
     get_manager.short_description = 'Department manager'
 
 @admin.register(EmployeeProject)
 class EmployeeProjectAdmin(admin.ModelAdmin):
-    list_display = ('id', 'employee_role','HoursWorked',)
+    list_display = ('id', 'role','hours_worked',)
 
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('name', 'participate_date','end_date', 'budget')
-    search_fields = ('name', 'participate_date', 'end_date,' ,'budget')
+    list_display = ('name', 'start_date','end_date', 'budget')
+    search_fields = ('name', 'start_date', 'end_date,' ,'budget')
     inlines=[EmployeeProjectInline]

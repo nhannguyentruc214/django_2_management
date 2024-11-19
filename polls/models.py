@@ -1,7 +1,7 @@
 from django.db import models
 
 class Department(models.Model):
-    title = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
     manager = models.OneToOneField(
         'Employee',
         on_delete=models.SET_NULL,
@@ -11,33 +11,34 @@ class Department(models.Model):
     )
 
     def __str__(self):
-        return self.title
+        return f"Department {self.pk}"
 
 class Project(models.Model):
     name = models.CharField(max_length=255, unique=True)
-    participate_date = models.DateField()
+    start_date = models.DateField()
     end_date = models.DateField()
     budget = models.IntegerField()
     def __str__(self):
-        return self.name
+        return f"Project {self.pk}"
 
 class Employee(models.Model):
     name = models.CharField(max_length=255)
     salary = models.IntegerField()
     department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='employees')
     position = models.CharField(max_length=255)
+    date_of_birth = models.DateField()
     def __str__(self):
-        return self.name
+        return f"Employee {self.pk}"
 
 class EmployeeProject(models.Model):
-    HoursWorked = models.IntegerField()
+    hours_worked = models.IntegerField()
     CHOICES = {
         "QC": "QualityAssurace",
         "FD": "FrontEndDev",
         "BD": "BackEndDev",
         "TT": "Tester"
     }
-    employee_role = models.CharField(max_length=255, choices=CHOICES)
+    role = models.CharField(max_length=255, choices=CHOICES)
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='employeeDetails')
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='projectsDetails')
 
