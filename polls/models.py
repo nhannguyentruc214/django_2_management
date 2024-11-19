@@ -37,10 +37,11 @@ class EmployeeProject(models.Model):
         "BD": "BackEndDev",
         "TT": "Tester"
     }
-
+    
+    @property
     def employee_name(self):
         return self.employee.name
-    
+    @property
     def project_name(self):
         return self.project.name
     
