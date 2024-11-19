@@ -42,8 +42,7 @@ class DepartmentAdmin(admin.ModelAdmin):
 
 @admin.register(EmployeeProject)
 class EmployeeProjectAdmin(admin.ModelAdmin):
-    list_display = ('id', 'role','hours_worked',)
-
+    list_display = ('id', 'employee_name','project_name','role','hours_worked',)
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
