@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Entry, Project, Employee, Department, EmployeeProject
+from .models import  Entry, Project, Employee, Department, EmployeeProject
 
 class EmployeeInline(admin.StackedInline):
     model = Employee
@@ -52,4 +52,4 @@ class ProjectAdmin(admin.ModelAdmin):
 
 @admin.register(Entry)
 class EntryAdmin(admin.ModelAdmin):
-    list_display = ('user', 'pub_date', 'title','slug','body')
+    list_display = ('title', 'pub_date', 'slug','body')
