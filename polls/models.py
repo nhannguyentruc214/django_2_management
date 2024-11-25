@@ -2,6 +2,7 @@ from django.db import models
 from tastypie.utils.timezone import now
 from django.db import models
 from django.utils.text import slugify
+# from django.contrib.auth.models import User
 
 class Entry(models.Model):
     title = models.CharField(max_length=200)

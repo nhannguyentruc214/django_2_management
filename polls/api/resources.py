@@ -3,7 +3,7 @@ from polls.models import Entry, Project, Employee, Department, EmployeeProject
 from tastypie import fields
 from tastypie.authorization import Authorization
 from tastypie.authentication import Authentication,ApiKeyAuthentication
-from polls.authentication import CustomApiKeyAuthentication
+from polls.authentication import CustomHTTPAuthentication
 
 class EntryResource(ModelResource):
     class Meta:
@@ -26,7 +26,7 @@ class DepartmentResource(ModelResource):
         queryset = Department.objects.all()
         allowed_methods = ['get', 'post']
         resource_name = 'department'
-        authentication = CustomApiKeyAuthentication()
+        authentication = CustomHTTPAuthentication()
         authorization = Authorization() # THIS IS IMPORTANT
 
 class EmployeeResource(ModelResource):
