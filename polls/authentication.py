@@ -2,7 +2,6 @@ from tastypie.models import ApiKey
 from tastypie.http import HttpUnauthorized
 from tastypie.authentication import Authentication
 from django.core.exceptions import ObjectDoesNotExist
-# from django.contrib.auth import get_user_model
 from tastypie.compat import (
     get_user_model, get_username_field, compare_sanitized_tokens, InvalidTokenFormat, check_token_format
 )
@@ -29,11 +28,6 @@ class CustomHTTPAuthentication(Authentication):
             username_field = get_username_field()
             User = get_user_model()
             try:
-                # User = get_user_model()
-                # super_user_query = User.objects.filter(is_superuser=True).values
-                # user_key = ApiKey.objects.get(key=api_key)
-                # print(super_user_query)
-                # print(user_key)
                 lookup_kwargs = {username_field: username}
                 user = User.objects.get(**lookup_kwargs)
             except ObjectDoesNotExist:

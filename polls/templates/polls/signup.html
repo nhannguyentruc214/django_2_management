@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Employee</title>
+</head>
+<body>
+    <h1>Create Employee</h1>
+    {% if error %}
+        <p style="color: red;">Error {{ status_code }}: {{ error }}</p>
+    {% endif %}
+    <form action="{% url 'signup' %}" method="POST">
+        {% csrf_token %}
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" ><br><br>
+
+        <label for="salary">Salary:</label>
+        <input type="number" id="salary" name="salary" ><br><br>
+
+        <label for="department">Department:</label>
+        <select id="department" name="department">
+            <option value="">Select Department</option>
+            {% for department in departments %}
+                <option value="{{ department.id }}">{{ department.name }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label for="position">Position:</label>
+        <input type="text" id="position" name="position" ><br><br>
+
+        <label for="date_of_birth">Date of Birth:</label>
+        <input type="date" id="date_of_birth" name="date_of_birth" ><br><br>
+
+        <button type="submit">Create Employee</button>
+    </form>
+</body>
+</html>
